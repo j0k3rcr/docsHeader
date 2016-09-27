@@ -1,0 +1,2 @@
+drop table Docs if exists; 
+create table Docs(Id INTEGER IDENTITY primary key, claveId varchar(20), actualizacion varchar(5), vigencia varchar(5), vigenciaT varchar(10), depart varchar(20), descrip varchar(50), fecha date);
