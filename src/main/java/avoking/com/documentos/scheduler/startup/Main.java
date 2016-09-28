@@ -23,6 +23,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 import javax.swing.Timer;
 import javax.swing.UIManager;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.xwpf.model.XWPFHeaderFooterPolicy;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFFooter;
+import org.apache.poi.xwpf.usermodel.XWPFHeader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -53,12 +59,26 @@ public class Main extends SwingWorker<String, String>{
             java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
             //</editor-fold>  
-        Main m = new Main();
-        m.execute();
-        splashLoading.getContentPane().setBackground(Color.WHITE);
-        splashLoading.pnlProgress.setBackground(Color.WHITE);
-        splashLoading.setLocationRelativeTo(null);
-        splashLoading.setVisible(true);
+            
+        try {
+            FileInputStream fis = new FileInputStream("E:\\Avo-King\\Documentos\\Desarrollo\\PROCEDIMIENTO_Pruebas_RH\\PDRH-05.docx");
+            XWPFDocument xdoc=new XWPFDocument(OPCPackage.open(fis));
+            XWPFHeaderFooterPolicy policy = new XWPFHeaderFooterPolicy(xdoc);
+            //read header
+            XWPFHeader header = policy.getDefaultHeader();
+            System.out.println( StringEscapeUtils.escapeJava(header.getText()) );
+//            //read footer
+//            XWPFFooter footer = policy.getDefaultFooter();
+//            System.out.println(footer.getText());
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        } 
+//        Main m = new Main();
+//        m.execute();
+//        splashLoading.getContentPane().setBackground(Color.WHITE);
+//        splashLoading.pnlProgress.setBackground(Color.WHITE);
+//        splashLoading.setLocationRelativeTo(null);
+//        splashLoading.setVisible(true);
     }
     
     public void init(){
